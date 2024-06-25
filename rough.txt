@@ -1,0 +1,13 @@
+5
+4
+3
+2
+1
+
+
+rev5
+rev4
+rev3
+rev2 -here   stack not empty store top in a variable call insert with 2, stack empty insert 2 then insert top
+rev1 -here   insert stakc empty push 1
+empty

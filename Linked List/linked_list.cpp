@@ -151,23 +151,90 @@ node* reverse(node* &head){
     return prev;
 }
 
+/**
+ * Reverses the first k nodes of a linked list.
+ *
+ * @param head A reference to the head of the linked list.
+ * @param k The number of nodes to reverse.
+ *
+ * @return A pointer to the new head of the reversed linked list.
+ *
+ * @throws None.
+ */
+/**
+ * Reverses the first k nodes of a linked list.
+ *
+ * @param head A reference to the head of the linked list.
+ * @param k The number of nodes to reverse.
+ *
+ * @return A pointer to the new head of the reversed linked list.
+ *
+ * @throws None.
+ */
+node* reverseKnodes(node* &head, int k){
+
+    node* prevptr = NULL;
+    node* currptr = head;
+    node* nextptr;
+
+    int count = 0;
+    while(currptr!=NULL && count<k){
+        nextptr = currptr->next;
+        currptr->next = prevptr;
+
+        prevptr = currptr;
+        currptr = nextptr;
+
+        count++;
+    }
+    if(nextptr!=NULL){
+        head->next = reverseKnodes(nextptr, k);
+    }
+
+    return prevptr;
+}
+
+node* rotateRight(node* &head, int k){
+    int length = 0;
+    node* newtail = head;
+    node* newhead = head;
+    node* tail = head;
+    node* temp = head;
+// 3-2-1-5-4
+// 4-3-2-1-5
+// 5-4-3-2-1
+    while(temp!=NULL){
+        length = length + 1;
+        temp = temp->next;
+    }
+    k=k%length;
+    int count=1;
+    while(tail->next!=NULL){
+        if(count == length - k){
+            newtail = tail;
+        }
+        if(count == length - k + 1){
+            newhead = tail;
+        }
+        tail = tail->next;
+        count++;
+    }
+    newtail->next = NULL;
+    tail->next = head;
+    return newhead;
+}
+
+
 int main(){
     node *head = NULL;
-    insertAtTail(head,1);
-    insertAtTail(head,2);
     insertAtTail(head,3);
-    insertAtTail(head,4);
+    insertAtTail(head,2);
+    insertAtTail(head,1);
     insertAtTail(head,5);
+    insertAtTail(head,4);
+    // insertAtTail(head,6);
     display(head);
-    // insertAthead(head,0);
-    // display(head);
-    // cout<<search(head, 5);
-    // deleteNode(head, 3);
-    // display(head);
-    // deleteAtHead(head);
-    // display(head);
-
-    node* newHead = reverse(head);
-    display(newHead);
+    node* newhead = rotateRight(head, 1);
+    display(newhead);
     return 0;
 }
